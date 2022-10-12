@@ -39,8 +39,8 @@ st.set_page_config(page_title='NETFLIX',  layout='wide')
 
 #Hydralit Navbar
 # define what option labels and icons to display
-Menu = option_menu(None, ["Home", "Dataset",  "EDA"], 
-    icons=['house', 'cloud-upload', "bar-chart-line","clipboard-check"], 
+Menu = option_menu(None, ["Home", "Dataset", "Knowledge Test",  "EDA"], 
+    icons=['house', 'cloud-upload',"clipboard-check", "bar-chart-line"], 
     menu_icon="cast", default_index=0, orientation="horizontal",
     styles={
         "container": {"padding": "0!important", "background-color": "#fafafa"},
@@ -104,6 +104,7 @@ if Menu == "Dataset":
         st_lottie(lottie_dataset, key = "EDA", height = 400, width = 700)
     df=pd.read_csv('netflix_titles.csv')
     st.dataframe(df)
+
 #Knowledge test:
 
 if Menu=="Knowledge Test":st.title("Here's a small Knowledge test to test your knowledge about NETFLIX.")
@@ -197,7 +198,7 @@ if Menu == "EDA":
           
          </p>pipreqs
             """,unsafe_allow_html = True)
-   Year = k2.slider('Select The year Please', 2008, 2021)
+  Year = k2.slider('Select The year Please', 2008, 2021)
   df1 = df[df["year"]==Year]
   y_с = df1.groupby('year')['country'].value_counts().reset_index(name='counts')
 
@@ -207,7 +208,7 @@ if Menu == "EDA":
                     range_color=[0,100])
 
   fig.update_layout(title='Dynamics of content by years (no international projects)')
-  k2.plotly_chart(fig, use_container_width=True)  
+  k2.plotly_chart(fig, use_container_width=True) 
   with k2:
         st.markdown("""
         <h3 class="f2 f1-m f-headline-l measure-narrow lh-title mv0">
@@ -241,16 +242,9 @@ if Menu == "EDA":
 
   s1.plotly_chart(fig, use_container_width=True)
 
-  with s1:
-        st.markdown("""
-        <h3 class="f2 f1-m f-headline-l measure-narrow lh-title mv0">
-         
-         </h3>
-         <p class="f5 f4-ns lh-copy measure mb4" style="text-align: justify;font-family: Sans Serif">
-          This graph shows that America has always led the way in adding content to Netflix
-         </p>
-            """,unsafe_allow_html = True)
-data_Movie = df_6_upd[df.type == "Movie"]
+
+      
+  data_Movie = df_6_upd[df.type == "Movie"]
   data_TV = df_6_upd[df.type == "TV Show"]
   
   st.header("Number of content by type across years ")
@@ -279,8 +273,10 @@ data_Movie = df_6_upd[df.type == "Movie"]
         st.plotly_chart(figw)
 
   if TV_show:
-        st.plotly_chart(fig22)  
-# IV- Various genres on Netflix (TOP 20)
+        st.plotly_chart(fig22)    
+
+
+# V- Various genres on Netflix (TOP 20)
   with h1:
         st.markdown("""
         <h3 class="f2 f1-m f-headline-l measure-narrow lh-title mv0">
@@ -291,7 +287,8 @@ data_Movie = df_6_upd[df.type == "Movie"]
          </p>
             """,unsafe_allow_html = True)
   df['genre'] = df['listed_in'].apply(lambda x :  x.replace(' ,',',').replace(', ',',').split(','))
-  key_value = {}  # key - genre, value - number of content 
+  key_value = {} 
+  # key - genre, value - number of content 
   for g1 in df['genre']:
     for g2 in g1:
         if g2 not in key_value:
@@ -326,7 +323,7 @@ data_Movie = df_6_upd[df.type == "Movie"]
           Netflix has the most international movies added, and Dramas comes second
          </p>
             """,unsafe_allow_html = True)
-# V- Ratings for all content on Netflix
+# VI- Ratings for all content on Netflix
   with w1:
         st.markdown("""
         <h3 class="f2 f1-m f-headline-l measure-narrow lh-title mv0">
@@ -355,12 +352,12 @@ data_Movie = df_6_upd[df.type == "Movie"]
           Netflix has the most TV-MA-rated content (36.4 %)
          </p>
             """,unsafe_allow_html = True)
-# VI- TV shows duration in Netflix
+# VII- TV shows duration in Netflix
 
   with w1:
         st.markdown("""
         <h3 class="f2 f1-m f-headline-l measure-narrow lh-title mv0">
-         TV shows duration in Netflix
+        TV shows duration in Netflix
          </h3>
          <p class="f5 f4-ns lh-copy measure mb4" style="text-align: justify;font-family: Sans Serif">
          
@@ -380,13 +377,3 @@ data_Movie = df_6_upd[df.type == "Movie"]
 
   fig.update_traces(textposition='inside', textinfo='percent+label')
   w2.plotly_chart(fig, use_container_width=True)
-
-  with w1:
-        st.markdown("""
-        <h3 class="f2 f1-m f-headline-l measure-narrow lh-title mv0">
-        
-         </h3>
-         <p class="f5 f4-ns lh-copy measure mb4" style="text-align: justify;font-family: Sans Serif">
-          TV shows with a duration of 1 season the largest number
-         </p>
-            """,unsafe_allow_html = True)

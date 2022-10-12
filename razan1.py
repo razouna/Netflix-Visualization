@@ -104,7 +104,40 @@ if Menu == "Dataset":
         st_lottie(lottie_dataset, key = "EDA", height = 400, width = 700)
     df=pd.read_csv('netflix_titles.csv')
     st.dataframe(df)
+#Knowledge test:
 
+if Menu=="Knowledge Test":st.title("Here's a small Knowledge test to test your knowledge about NETFLIX.")
+if Menu=="Knowledge Test":st.write("1- Which country has added the most content to Netflix?")
+if Menu=="Knowledge Test":st.write("")
+if Menu=="Knowledge Test":a= st.checkbox('United Kingdom')
+if Menu=="Knowledge Test":b= st.checkbox('Germany')
+if Menu=="Knowledge Test":c= st.checkbox('France')
+if Menu=="Knowledge Test":d= st.checkbox('United States')
+if Menu=="Knowledge Test":
+    if a|b|c:
+        st.write("False")
+if Menu=="Knowledge Test":
+    if d:
+        st.write("Correct, United States has added the most content to Netflix")
+
+if Menu=="Knowledge Test":st.write("") 
+if Menu=="Knowledge Test":st.write("")
+
+if Menu=="Knowledge Test":st.write("2- Percentage of TV shows that have 3 seasons:")
+if Menu=="Knowledge Test":st.write("")
+if Menu=="Knowledge Test":a= st.checkbox('67%')
+if Menu=="Knowledge Test":b= st.checkbox('25.4%')
+if Menu=="Knowledge Test":c= st.checkbox('7.44%')
+if Menu=="Knowledge Test":d= st.checkbox('3.55%')
+if Menu=="Knowledge Test":
+    if a|b|d:
+        st.write("False")
+if Menu=="Knowledge Test":
+    if c:
+        st.write("Correct")
+
+if Menu=="Knowledge Test":st.write("") 
+if Menu=="Knowledge Test":st.write("")
 # EDA page
 df=pd.read_csv('netflix_titles.csv')
 if Menu == "EDA":
@@ -121,7 +154,7 @@ if Menu == "EDA":
   with g1:
         st.markdown("""
         <h3 class="f2 f1-m f-headline-l measure-narrow lh-title mv0">
-         I- Which country has added the most content to Netflix? (international projects separately)
+          Which country has added the most content to Netflix? (international projects separately)
          </h3>
          <p class="f5 f4-ns lh-copy measure mb4" style="text-align: justify;font-family: Sans Serif">
           
@@ -158,13 +191,15 @@ if Menu == "EDA":
   with k2:
         st.markdown("""
         <h3 class="f2 f1-m f-headline-l measure-narrow lh-title mv0">
-         II- Dynamics of content by years (no international projects)
+         Dynamics of content by years (no international projects)
          </h3>
          <p class="f5 f4-ns lh-copy measure mb4" style="text-align: justify;font-family: Sans Serif">
           
          </p>pipreqs
             """,unsafe_allow_html = True)
-  y_с = df.groupby('year')['country'].value_counts().reset_index(name='counts')
+   Year = k2.slider('Select The year Please', 2008, 2021)
+  df1 = df[df["year"]==Year]
+  y_с = df1.groupby('year')['country'].value_counts().reset_index(name='counts')
 
   fig = px.choropleth(y_с, locations="country", color="counts", 
                     locationmode='country names',
@@ -172,7 +207,7 @@ if Menu == "EDA":
                     range_color=[0,100])
 
   fig.update_layout(title='Dynamics of content by years (no international projects)')
-  k2.plotly_chart(fig, use_container_width=True) 
+  k2.plotly_chart(fig, use_container_width=True)  
   with k2:
         st.markdown("""
         <h3 class="f2 f1-m f-headline-l measure-narrow lh-title mv0">
@@ -186,7 +221,7 @@ if Menu == "EDA":
   with s1:
         st.markdown("""
         <h3 class="f2 f1-m f-headline-l measure-narrow lh-title mv0">
-         III- Dynamics of adding content for the top 5 countries by addition (excluding international projects)
+         Dynamics of adding content for the top 5 countries by addition (excluding international projects)
          </h3>
          <p class="f5 f4-ns lh-copy measure mb4" style="text-align: justify;font-family: Sans Serif">
           
@@ -215,12 +250,41 @@ if Menu == "EDA":
           This graph shows that America has always led the way in adding content to Netflix
          </p>
             """,unsafe_allow_html = True)
+data_Movie = df_6_upd[df.type == "Movie"]
+  data_TV = df_6_upd[df.type == "TV Show"]
+  
+  st.header("Number of content by type across years ")
+  Movies = st.checkbox('Movie')
+  TV_show = st.checkbox('Tv Show')
+ 
+  figw = px.histogram(data_Movie,x="year",y="counts",text_auto=True)
+  figw.update_traces(opacity=1)
+  figw.update_layout(bargap=0.2,
+    font_color="Black",
+    title_font_family="Times New Roman",
+    title_font_color="Black",
+    legend_title_font_color="black")  
 
+
+  fig22 = px.histogram(data_TV,x="year",y="counts",text_auto=True)
+  fig22.update_traces(opacity=1)
+  fig22.update_layout(bargap=0.2,
+    font_color="Black",
+    title_font_family="Times New Roman",
+    title_font_color="Black",
+    legend_title_font_color="black")   
+    
+
+  if Movies:
+        st.plotly_chart(figw)
+
+  if TV_show:
+        st.plotly_chart(fig22)  
 # IV- Various genres on Netflix (TOP 20)
   with h1:
         st.markdown("""
         <h3 class="f2 f1-m f-headline-l measure-narrow lh-title mv0">
-         IV- Various genres on Netflix (TOP 20)
+         Various genres on Netflix (TOP 20)
          </h3>
          <p class="f5 f4-ns lh-copy measure mb4" style="text-align: justify;font-family: Sans Serif">
         
@@ -266,7 +330,7 @@ if Menu == "EDA":
   with w1:
         st.markdown("""
         <h3 class="f2 f1-m f-headline-l measure-narrow lh-title mv0">
-        V- Ratings for all content on Netflix
+         Ratings for all content on Netflix
          </h3>
          <p class="f5 f4-ns lh-copy measure mb4" style="text-align: justify;font-family: Sans Serif">
          
@@ -296,7 +360,7 @@ if Menu == "EDA":
   with w1:
         st.markdown("""
         <h3 class="f2 f1-m f-headline-l measure-narrow lh-title mv0">
-        VI- TV shows duration in Netflix
+         TV shows duration in Netflix
          </h3>
          <p class="f5 f4-ns lh-copy measure mb4" style="text-align: justify;font-family: Sans Serif">
          
